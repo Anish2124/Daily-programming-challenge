@@ -1,0 +1,53 @@
+-----------------Trapping Rain Water-----------------
+
+import java.util.*;
+
+public class TrappingRainWater {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of bars: ");
+        int n = sc.nextInt();
+
+        int arr[] = new int[n];
+        System.out.println("Enter heights of bars:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        int water = getTrappedWater(arr);
+
+        System.out.println("Total trapped water: " + water);
+
+        sc.close();
+    }
+
+    public static int getTrappedWater(int arr[]) {
+        int n = arr.length;
+        if (n < 3) return 0; // less than 3 bars = no water
+
+        int left = 0, right = n - 1;
+        int leftMax = 0, rightMax = 0;
+        int water = 0;
+
+        while (left < right) {
+            if (arr[left] < arr[right]) {
+                if (arr[left] >= leftMax) {
+                    leftMax = arr[left];
+                } else {
+                    water += leftMax - arr[left];
+                }
+                left++;
+            } else {
+                if (arr[right] >= rightMax) {
+                    rightMax = arr[right];
+                } else {
+                    water += rightMax - arr[right];
+                }
+                right--;
+            }
+        }
+
+        return water;
+    }
+}
