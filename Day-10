@@ -1,0 +1,48 @@
+--------------------Group Anagrams-------------------
+
+import java.util.*;
+
+public class GroupAnagrams {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Input
+        System.out.println("Enter number of words:");
+        int n = sc.nextInt();
+        sc.nextLine(); // consume leftover newline
+
+        String[] words = new String[n];
+        System.out.println("Enter the words:");
+        for (int i = 0; i < n; i++) {
+            words[i] = sc.nextLine();
+        }
+
+        List<List<String>> result = groupAnagrams(words);
+
+        // Output 
+        System.out.println("\nAnagram Groups:");
+        for (List<String> group : result) {
+            System.out.println(group);
+        }
+
+        sc.close();
+    }
+
+    public static List<List<String>> groupAnagrams(String[] words) {
+        Map<String, List<String>> map = new HashMap<>();
+
+        for (String word : words) {
+            char[] arr = word.toCharArray();
+            Arrays.sort(arr);
+            String key = new String(arr);
+
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList<>());
+            }
+            map.get(key).add(word);
+        }
+
+        return new ArrayList<>(map.values());
+    }
+}
+
